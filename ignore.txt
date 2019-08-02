@@ -1,0 +1,11 @@
+/# Files in folders to ignore
+
+/figures/temp/*
+
+/data/temp/*
+
+/data/temp/raw/*
+
+/presentations/*
+
+/papers/*
