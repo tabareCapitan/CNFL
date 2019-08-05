@@ -4,8 +4,10 @@
 
 /data/temp/*
 
-/data/temp/raw/*
+/data/raw/*
 
 /presentations/*
 
 /papers/*
+
+/draft/oldDrafts/*
