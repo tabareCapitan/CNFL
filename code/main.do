@@ -47,12 +47,18 @@ run "$RUTA\code\deleteTemp.do"	                                                /
 
 run "$RUTA\code\deleteOutliers.do"                                              // PENDING
 
-
-*** DATA ANALYSIS **************************************************************
-
 run "$RUTA\code\createStataPanels.do"                                           // PENDING
 
 run "$RUTA\code\classifyTreatment.do"                                           // PENDING
+
+*** DATA ANALYSIS **************************************************************
+
+run 
+
+
+***
+
+
 
 run "$RUTA\code\treatmentAnalysis.do"                                           // PENDING
 
