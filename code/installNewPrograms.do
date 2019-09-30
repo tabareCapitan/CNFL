@@ -25,6 +25,8 @@ cap ssc install bacondecomp
 
 cap ssc install grc1leg
 
+cap ssc instal coefplot
+
 
 
 *** END OF FILE ****************************************************************

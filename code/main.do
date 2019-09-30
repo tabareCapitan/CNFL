@@ -59,7 +59,7 @@ run "$RUTA\code\treatmentAnalysis.do"                                           
 
 run "$RUTA\code\regressionAnalysis.do"                                          // PENDING
 
-run "$RUTA\code\bothAnalysis.do"                                                // PENDING
+run "$RUTA\code\bothAnalysis.do"                                                // USED ALL
 
 
 *** END OF FILE ****************************************************************

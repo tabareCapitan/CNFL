@@ -17,29 +17,29 @@ version 14
 clear
 
 *** DESCRIPTIVE STATISTICS *****************************************************
-//
-// use "$RUTA\data\treatmentNoOutliersXTtype.dta", clear
-//
-//
-// gen total = punta + valle + nocturna
-//
-// sum total punta valle nocturna
-//
-// by treatmentType, sort: sum total punta valle nocturna
-//
-// *
-//
-// gen puntaHourly = punta / 5
-//
-// gen valleHourly = valle / 9
-//
-// gen nocturnaHourly = nocturna / 10
-//
-// gen totalHourly = total / 24
-//
-// sum totalH puntaH valleH nocturnaH
-//
-// by treatmentType, sort: sum totalH puntaH valleH nocturnaH
+
+use "$RUTA\data\treatmentNoOutliersXTtype.dta", clear
+
+
+gen total = punta + valle + nocturna
+
+sum total punta valle nocturna
+
+by treatmentType, sort: sum total punta valle nocturna
+
+*
+
+gen puntaHourly = punta / 5
+
+gen valleHourly = valle / 9
+
+gen nocturnaHourly = nocturna / 10
+
+gen totalHourly = total / 24
+
+sum totalH puntaH valleH nocturnaH
+
+by treatmentType, sort: sum totalH puntaH valleH nocturnaH
 
 
 *** PLOT CONSUMPTION PER BLOCK *************************************************
