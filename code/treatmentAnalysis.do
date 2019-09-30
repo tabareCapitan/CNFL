@@ -1,10 +1,10 @@
 /*******************************************************************************
 Project: 		[PENDING]
 Author: 		tabarecapitan.com
-	
+
 Description:	Analyze just treated contracts
 
-Requires:		
+Requires:
 
 Input:			None
 Output:			None
@@ -17,29 +17,29 @@ version 14
 clear
 
 *** DESCRIPTIVE STATISTICS *****************************************************
-
-use "$RUTA\data\treatmentNoOutliersXTtype.dta", clear
-
-
-gen total = punta + valle + nocturna
-
-sum total punta valle nocturna
-
-by treatmentType, sort: sum total punta valle nocturna
-
-* 
-
-gen puntaHourly = punta / 5
-
-gen valleHourly = valle / 9
-
-gen nocturnaHourly = nocturna / 10
-
-gen totalHourly = total / 24
-
-sum totalH puntaH valleH nocturnaH
-
-by treatmentType, sort: sum totalH puntaH valleH nocturnaH
+//
+// use "$RUTA\data\treatmentNoOutliersXTtype.dta", clear
+//
+//
+// gen total = punta + valle + nocturna
+//
+// sum total punta valle nocturna
+//
+// by treatmentType, sort: sum total punta valle nocturna
+//
+// *
+//
+// gen puntaHourly = punta / 5
+//
+// gen valleHourly = valle / 9
+//
+// gen nocturnaHourly = nocturna / 10
+//
+// gen totalHourly = total / 24
+//
+// sum totalH puntaH valleH nocturnaH
+//
+// by treatmentType, sort: sum totalH puntaH valleH nocturnaH
 
 
 *** PLOT CONSUMPTION PER BLOCK *************************************************
@@ -47,7 +47,7 @@ by treatmentType, sort: sum totalH puntaH valleH nocturnaH
 use "$RUTA\data\treatmentNoOutliersXTtype.dta", clear
 
 
-preserve 
+preserve
 
 	collapse punta valle nocturna, by(datevar)
 
@@ -71,7 +71,7 @@ preserve
 
 restore
 
-preserve 
+preserve
 
 	keep if treatmentType == 0
 
@@ -99,7 +99,7 @@ preserve
 restore
 
 
-preserve 
+preserve
 
 	keep if treatmentType == -1
 
@@ -128,7 +128,7 @@ restore
 
 
 
-preserve 
+preserve
 
 	keep if treatmentType == 1
 
@@ -154,49 +154,49 @@ preserve
 		graph export "$RUTA\figuresTables\treatedJoiners.png", replace
 
 restore
-	
+
 *** PLOT BLOCKS BETWEEN TYPES **************************************************
 
 use "$RUTA\data\treatmentNoOutliersXTtype.dta", clear
 
-preserve 
+preserve
 
 	keep if treatmentType == -1
 
 	collapse punta valle nocturna, by(datevar)
-	
+
 	gen puntaLeft = punta / 5
 	gen valleLeft = valle / 9
 	gen nocturnaLeft = nocturna / 10
-	
+
 	savesome using "$RUTA\data\temp\treatedLeft.dta", replace
 
 restore
 
-preserve 
+preserve
 
 	keep if treatmentType == 0
 
 	collapse punta valle nocturna, by(datevar)
-	
+
 	gen puntaAlways = punta / 5
 	gen valleAlways = valle / 9
 	gen nocturnaAlways = nocturna / 10
-	
+
 	savesome using "$RUTA\data\temp\treatedAlways.dta", replace
 
 restore
 
-preserve 
+preserve
 
 	keep if treatmentType == 1
 
 	collapse punta valle nocturna, by(datevar)
-	
+
 	gen puntaJoin = punta / 5
 	gen valleJoin = valle / 9
 	gen nocturnaJoin = nocturna / 10
-	
+
 	savesome using "$RUTA\data\temp\treatedJoin.dta", replace
 
 restore

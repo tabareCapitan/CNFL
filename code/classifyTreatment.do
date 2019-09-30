@@ -25,7 +25,7 @@ tab treatment
 
 egen tr_mean = mean(treatment), by(contract)
 
-keep if tr_mean!=1 & tr_mean!=0
+keep if tr_mean != 1 & tr_mean != 0
 
 
 *** SAVE CONTRATS "JOIN" *******************************************************
@@ -33,7 +33,7 @@ keep if tr_mean!=1 & tr_mean!=0
 sort contract datevar
 
 gen join = 0
-	replace join = 1 															///
+	replace join = 1 															                                ///
 		if contract[_n] == contract[_n+1] & treatment[_n] < treatment[_n+1]
 
 egen joiners = mean(join), by(contract)
@@ -44,7 +44,7 @@ savesome using "$RUTA\data\joiners.dta" if joiners > 0, replace
 *** SAVE CONTRATS "LEFT" *******************************************************
 
 gen left = 0
-	replace left = 1 															///
+	replace left = 1 														                                	///
 		if contract[_n] == contract[_n+1] & treatment[_n] > treatment[_n+1]
 
 egen lefters = mean(left), by(contract)

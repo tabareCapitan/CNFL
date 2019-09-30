@@ -1,16 +1,15 @@
 /*******************************************************************************
-Project: 		[PENDING]
-Author: 		tabarecapitan.com
-	
-Description:	Main file
+Project:     [PENDING]
+Author:     tabarecapitan.com
 
-Requires:		
+Description:
 
-Input:			None
-Output:			None
+Requires:
 
-Created:		20180206
-Last modified:	20180206
+Input:      None
+Output:      None
+
+Created: 20180206 | Last modified:  20190929
 *******************************************************************************/
 version 14
 
@@ -46,16 +45,18 @@ save "$RUTA\data\controlNoOutliersXT.dta", replace
 
 use "$RUTA\data\treatmentNoOutliers.dta", clear
 
+
 gen punta = consumption if timeBlock == 6
 
 gen valle = consumption if timeBlock == 7
 
 gen nocturna = consumption if timeBlock == 8
 
-collapse year sucursal (first) provincia (first) canton (first) distrito 		///
-	location contract month treatment (sum) punta (sum) valle (sum) nocturna	///
-	, by(unique)	
-	
+collapse year sucursal (first) provincia (first) canton (first) distrito        ///
+         location contract month treatment (sum) punta (sum) valle (sum)        ///
+				 nocturna                                                               ///
+        , by(unique)
+
 
 gen datevar = ym(year,month)
 
@@ -64,7 +65,7 @@ format datevar %tm
 xtset contract datevar
 
 save "$RUTA\data\treatmentNoOutliersXT.dta", replace
-	
+
 
 *** END OF FILE ****************************************************************
 ********************************************************************************

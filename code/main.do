@@ -8,15 +8,10 @@ TabareCapitan.com
 Description:
 Controls the flow of the code
 
-Created: 20190802 | Last modified: 20190804
+Created: 20190802 | Last modified: 20190929
 *******************************************************************************/
 version 14.2
 
-*** TO DO LIST ****************************************************************
-*** Use gtools and ftools to make things faster
-***
-***
-********************************************************************************
 *** ISSUES *********************************************************************
 ***
 *** I'm not dealing with the Activo or Inactivo. Not sure what is that. Very
@@ -28,10 +23,11 @@ version 14.2
 
 global RUTA "D:\Dropbox\research\_active\CNFL"
 
+run "$RUTA\code\settings.do"
 
 *** NEW PROGRAMS ***************************************************************
 
-run "$RUTA\code\stata\installNewPrograms.do"                                    // PENDING
+run "$RUTA\code\installNewPrograms.do"                                    // PENDING
 
 *** DATA MANAGEMENT ************************************************************
 
@@ -43,23 +39,22 @@ run "$RUTA\code\createPanels.do"                                                
 
 run "$RUTA\code\appendAll.do"	                                                  // PENDING
 
-run "$RUTA\code\deleteTemp.do"	                                                // PENDING
+*run "$RUTA\code\deleteTemp.do"	                                                // PENDING
 
 run "$RUTA\code\deleteOutliers.do"                                              // PENDING
 
 run "$RUTA\code\createStataPanels.do"                                           // PENDING
 
-run "$RUTA\code\classifyTreatment.do"                                           // PENDING
+*run "$RUTA\code\classifyTreatment.do"                                           // PENDING
+
+run "$RUTA\code\tagContractType.do"                                             // DONE
 
 *** DATA ANALYSIS **************************************************************
 
-run 
+run "$RUTA\code\paper.do"                                                       // IN PROGRESS
 
 
 ***
-
-
-
 run "$RUTA\code\treatmentAnalysis.do"                                           // PENDING
 
 run "$RUTA\code\regressionAnalysis.do"                                          // PENDING

@@ -1,18 +1,17 @@
 /*******************************************************************************
-Project: 		[PENDING]
+Project: 		                                                                     [PENDING]
 Author: 		tabarecapitan.com
 
-Description:	Main file
+Description:
 
-Requires:		ssc install savesome (in createPanels.do and appendAll.do)
+Requires:
 
 Input:			None
 Output:			None
 
-Created:		20180128
-Last modified:	20180128
+Created:		20180128 | Last modified:	20190929
 *******************************************************************************/
-version 14
+version 14.2
 
 clear
 
@@ -23,7 +22,7 @@ use "$RUTA\data\both.dta", clear
 drop if consumption <= 0
 
 * sum consumption, de
-// There are almost 3M consumptions > 100000. Check for errors!
+// There are almost 3M consumptions > 100000. Check for errors! (still true?)
 
 drop if consumption > 1000
 
@@ -37,7 +36,7 @@ use "$RUTA\data\control.dta", clear
 drop if consumption <= 0
 
 * sum consumption, de
-// There are almost 3M consumptions > 100000. Check for errors!
+// There are almost 3M consumptions > 100000. Check for errors! (still true?)
 
 drop if consumption > 1000
 
@@ -48,10 +47,12 @@ save "$RUTA\data\controlNoOutliers", replace
 
 use "$RUTA\data\treatment.dta", clear
 
+
+
 drop if consumption <= 0
 
 * sum consumption, de
-// There are almost 3M consumptions > 100000. Check for errors!
+// There are almost 3M consumptions > 100000. Check for errors! (still true?)
 
 drop if consumption > 1000
 
