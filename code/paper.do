@@ -295,12 +295,12 @@ collapse (sum) join2, by(datevar)
 #delimit ;
 
 twoway  (tsline join2, recast(bar)),
-    		yscale(on)
+        yscale(on)
         ylabel(,ang(h))
-    		ytitle(Number of contracts)
-    		xtitle("")
-    		title("")
-    		xline(0)
+        ytitle(Number of contracts)
+        xtitle("")
+        title("")
+        xline(0)
         ;
 
 graph export "$RUTA\figures\numberJoinersPerMonth.png", replace
@@ -321,12 +321,12 @@ collapse (sum) left2, by(datevar)
 #delimit ;
 
 twoway  (tsline left2, recast(bar)),
-    		yscale(on)
+        yscale(on)
         ylabel(,ang(h))
-    		ytitle(Number of contracts)
-    		xtitle("")
-    		title("")
-    		xline(0)
+        ytitle(Number of contracts)
+        xtitle("")
+        title("")
+        xline(0)
         ;
 
 graph export "$RUTA\figuresTables\numberLeftersPerMonth.png", replace
@@ -366,15 +366,15 @@ drop if demeanedC > 500 | demeanedC < -500
 #delimit ;
 
 twoway (scatter demeanedConsumption relativeEntry, sort msize (tiny) jitter(2))
-  	   (lfit demeanedConsumption relativeEntry if relativeEntry < 0)
-  	   (lfit demeanedConsumption relativeEntry if relativeEntry >= 0)
+       (lfit demeanedConsumption relativeEntry if relativeEntry < 0)
+       (lfit demeanedConsumption relativeEntry if relativeEntry >= 0)
        ,
-    	 yscale(off)
-    	 xtitle(Relative entry)
-    	 title("")
-    	 legend(on order(1 "Consumption (Demeaned)" 2 "Fitted line (out)"
-    	 3 "Fitted line (in)" ) cols(3))
-    	 xline(0)
+       yscale(off)
+       xtitle(Relative entry)
+       title("")
+       legend(on order(1 "Consumption (Demeaned)" 2 "Fitted line (out)"
+       3 "Fitted line (in)" ) cols(3))
+       xline(0)
        ;
 
 graph export "$RUTA\figures\outInScatter.png", replace
@@ -384,16 +384,16 @@ graph export "$RUTA\figures\outInScatter.png", replace
 
 *** JOIN: PLOT # OBS IN EACH MONTH  ******************************************** FIGURE X
 
-count if relativeEntry < 0	// 256
+count if relativeEntry < 0  // 256
 
-count if relativeEntry >= 0	// 4294
+count if relativeEntry >= 0  // 4294
 
 egen nPeriod = count(year), by(relativeEntry)
 
 #delimit ;
 
 twoway  (spike nPeriod relativeEntry, sort),
-    		title("")
+        title("")
         ylabel(,ang(h))
         ytitle("Number of observations")
         xtitle("Relative exit")
@@ -436,14 +436,14 @@ drop if demeanedC > 300 | demeanedC < -300
 #delimit ;
 
 twoway (scatter demeanedConsumption relativeLeft, sort msize (tiny) )
-	     (lfit demeanedConsumption relativeLeft if relativeLeft < 0)
-	     (lfit demeanedConsumption relativeLeft if relativeLeft >= 0),
-	     yscale(off)
-		   xtitle("Relative exit")
-		   title("")
-		   legend(on order(1 "Consumption (Demeaned)" 2 "Fitted line (in)"
-			                                      3 "Fitted line (out)" ) cols(3))
-		   xline(0)
+       (lfit demeanedConsumption relativeLeft if relativeLeft < 0)
+       (lfit demeanedConsumption relativeLeft if relativeLeft >= 0),
+       yscale(off)
+       xtitle("Relative exit")
+       title("")
+       legend(on order(1 "Consumption (Demeaned)" 2 "Fitted line (in)"
+                                            3 "Fitted line (out)" ) cols(3))
+       xline(0)
 ;
 
 graph export "$RUTA\figures\inOutScatter.png", replace
@@ -453,9 +453,9 @@ graph export "$RUTA\figures\inOutScatter.png", replace
 
 *** LEFT: PLOT # OBS IN EACH MONTH  ******************************************** FIGURE X
 
-count if relativeLeft < 0 	// 11485
+count if relativeLeft < 0   // 11485
 
-count if relativeLeft >= 0	// 13480
+count if relativeLeft >= 0  // 13480
 
 
 egen nPeriod = count(year), by(relativeLeft)
@@ -463,9 +463,9 @@ egen nPeriod = count(year), by(relativeLeft)
 #delimit ;
 
 twoway  (spike nPeriod relativeLeft, sort),
-    		title("")
+        title("")
         ylabel(,ang(h))
-    		ytitle("Number of observations")
+        ytitle("Number of observations")
         xtitle("Relative exit")
         ;
 
@@ -491,12 +491,12 @@ global LEADS "F6.first F5.first F4.first F3.first F2.first F.first"
 global LAGS  "L.first L2.first L3.first L4.first L5.first L6.first"
 
 
-xtreg consumption i.datevar $LEADS first $LAGS,	fe cluster(contract)
+xtreg consumption i.datevar $LEADS first $LAGS,  fe cluster(contract)
 
 #delimit ;
 
 coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
-		      levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
+          levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
           legend(order(1 "99%" 2 "95%" 3 "90%" )
                                   ring(0) pos(1) col(1) region(lcolor(none)))
           vertical
@@ -538,12 +538,12 @@ global LEADS "F6.first F5.first F4.first F3.first F2.first F.first"
 global LAGS  "L.first L2.first L3.first L4.first L5.first L6.first"
 
 
-xtreg consumption i.datevar $LEADS first $LAGS,	fe cluster(contract)
+xtreg consumption i.datevar $LEADS first $LAGS,  fe cluster(contract)
 
 #delimit ;
 
 coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
-		      levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
+          levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
           legend(order(1 "99%" 2 "95%" 3 "90%" )
                                   ring(0) pos(1) col(1) region(lcolor(none)))
           vertical
@@ -586,12 +586,12 @@ global LEADS "F6.first F5.first F4.first F3.first F2.first F.first"
 global LAGS  "L.first L2.first L3.first L4.first L5.first L6.first"
 
 
-xtreg consumption i.datevar $LEADS first $LAGS,	fe cluster(contract)
+xtreg consumption i.datevar $LEADS first $LAGS,  fe cluster(contract)
 
 #delimit ;
 
 coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
-		      levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
+          levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
           legend(order(1 "99%" 2 "95%" 3 "90%" )
                                   ring(0) pos(1) col(1) region(lcolor(none)))
           vertical
@@ -623,12 +623,12 @@ global LEADS "F3.first F2.first F.first"
 global LAGS  "L.first L2.first L3.first"
 
 
-xtreg consumption i.datevar $LEADS first $LAGS,	fe cluster(contract)
+xtreg consumption i.datevar $LEADS first $LAGS,  fe cluster(contract)
 
 #delimit ;
 
 coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
-		      levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
+          levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
           legend(order(1 "99%" 2 "95%" 3 "90%" )
                                   ring(0) pos(1) col(1) region(lcolor(none)))
           vertical
@@ -671,12 +671,12 @@ global LEADS "F6.first F5.first F4.first F3.first F2.first F.first"
 global LAGS  "L.first L2.first L3.first L4.first L5.first L6.first"
 
 
-xtreg consumption i.datevar $LEADS first $LAGS,	fe cluster(contract)
+xtreg consumption i.datevar $LEADS first $LAGS,  fe cluster(contract)
 
 #delimit ;
 
 coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
-		      levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
+          levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
           legend(order(1 "99%" 2 "95%" 3 "90%" )
                                   ring(0) pos(1) col(1) region(lcolor(none)))
           vertical
@@ -708,12 +708,12 @@ global LEADS "F3.first F2.first F.first"
 global LAGS  "L.first L2.first L3.first"
 
 
-xtreg consumption i.datevar $LEADS first $LAGS,	fe cluster(contract)
+xtreg consumption i.datevar $LEADS first $LAGS,  fe cluster(contract)
 
 #delimit ;
 
 coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
-		      levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
+          levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
           legend(order(1 "99%" 2 "95%" 3 "90%" )
                                   ring(0) pos(1) col(1) region(lcolor(none)))
           vertical
@@ -769,19 +769,20 @@ gen pricing = .
 #delimit ;
 
 twoway  (kdensity consumption )
-    		(line pricing consumption, sort yaxis(2)),
-    		ytitle(Consumption density)
-    		ytitle(Marginal price per kWh, axis(2) orientation(rvertical))
-    		ylabel(none, ang(h))
-    		yscale(on)
-    		xtitle(kWh)
-    		title("")
-    		note("")
-    		legend(on order(1 "Consumption" 2 "Pricing scheme"))
-    		xline(200 300)
+        (line pricing consumption, sort yaxis(2)),
+        ytitle(Consumption density)
+        ytitle(Marginal price per kWh, axis(2) orientation(rvertical))
+        ylabel(none, ang(h))
+        yscale(on)
+        xtitle(kWh)
+        title("")
+        note("")
+        legend(on order(1 "Consumption" 2 "Pricing scheme"))
+        xline(200 300)
         ;
 
-graph export "$RUTA\figures\bunchingControl.png", replace;
+graph export "$RUTA\figures\bunchingControl.png", replace
+                                                    width(10000) height(8000);
 
 #delimit cr
 

@@ -27,7 +27,7 @@ run "$RUTA\code\settings.do"
 
 *** NEW PROGRAMS ***************************************************************
 
-run "$RUTA\code\installNewPrograms.do"                                    // PENDING
+run "$RUTA\code\installNewPrograms.do"                                          // PENDING
 
 *** DATA MANAGEMENT ************************************************************
 
@@ -35,17 +35,17 @@ run "$RUTA\code\importData.do"                                                  
 
 run "$RUTA\code\createPanels.do"                                                // DONE
 
-	* -> do "$RUTA\code\clean.do" (subcall)
+  * -> do "$RUTA\code\clean.do" (subcall)
 
-run "$RUTA\code\appendAll.do"	                                                  // PENDING
+run "$RUTA\code\appendAll.do"                                                   // PENDING
 
-*run "$RUTA\code\deleteTemp.do"	                                                // PENDING
+*run "$RUTA\code\deleteTemp.do"                                                  // PENDING
 
 run "$RUTA\code\deleteOutliers.do"                                              // PENDING
 
 run "$RUTA\code\createStataPanels.do"                                           // PENDING
 
-*run "$RUTA\code\classifyTreatment.do"                                           // PENDING
+*run "$RUTA\code\classifyTreatment.do"                                          // PENDING
 
 run "$RUTA\code\tagContractType.do"                                             // DONE
 
