@@ -12,12 +12,9 @@ Created: 20190802 | Last modified: 20190929
 *******************************************************************************/
 version 14.2
 
-*** ISSUES *********************************************************************
+*** PENDING ********************************************************************
 ***
-*** I'm not dealing with the Activo or Inactivo. Not sure what is that. Very
-*** important with extra obs
-***
-*** Adding extra obs, check again everything from scratch! it is sketchy!
+*** SIMPLIFY TO ONLY ONE BIG DATASET WITH EVERYTHING
 ***
 ********************************************************************************
 
@@ -43,7 +40,7 @@ run "$RUTA\code\appendAll.do"                                                   
 
 run "$RUTA\code\deleteOutliers.do"                                              // PENDING
 
-run "$RUTA\code\createStataPanels.do"                                           // PENDING
+run "$RUTA\code\createStataPanels.do"                                           // DONE
 
 *run "$RUTA\code\classifyTreatment.do"                                          // PENDING
 
@@ -55,7 +52,7 @@ run "$RUTA\code\paper.do"                                                       
 
 
 ***
-run "$RUTA\code\treatmentAnalysis.do"                                           // PENDING
+run "$RUTA\code\treatmentAnalysis.do"                                           // USED ALL
 
 run "$RUTA\code\regressionAnalysis.do"                                          // PENDING
 

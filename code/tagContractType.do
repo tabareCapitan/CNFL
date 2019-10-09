@@ -52,10 +52,10 @@ drop tag
 
 gen contractType = .
 
-  replace contractType = 0 if tr_mean == 0
-  replace contractType = 1 if tr_mean == 1
-  replace contractType = 2 if joiners > 0 & !missing(joiners)
-  replace contractType = 3 if lefters > 0 & !missing(lefters)
+  replace contractType = 0 if tr_mean == 0																			// Always out
+  replace contractType = 1 if tr_mean == 1																			// Always in
+  replace contractType = 2 if joiners > 0 & !missing(joiners)										// Join
+  replace contractType = 3 if lefters > 0 & !missing(lefters)										// Left
 
 *** SAVE ***********************************************************************
 

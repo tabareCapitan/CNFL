@@ -12,6 +12,8 @@ Created: 20190929 | Last modified: 20190930
 *******************************************************************************/
 version 14.2
 
+browse
+%show_gui
 
 *** NUMBER OF CONTRACTS BY TYPE ************************************************ TABLE 2
 
@@ -265,7 +267,7 @@ graph export "$RUTA\figures\kdensityTVPcontractsLeft.png", replace
                                               width(10000) height(8000);
 
 
-*** COMBINE ********************************************************************
+*** COMBINE --------------------------------------------------------------------
 
 grc1leg       "$RUTA\figures\temp\kernelAll"
               "$RUTA\figures\temp\kernelAllTVP"
@@ -738,22 +740,290 @@ test $LAGS;
 #delimit cr
 
 
-*** TIME SERIES DISAGGREGATE CONSUMPTION *************************************** FIGURE X
 
-* ALWAYS IN TVP ----------------------------------------------------------------
+*** TOTAL CONSUMPTION BY TYPE OF CONTRACT ************************************** FIGURE X
 
-use "$RUTA\data\bothNoOutliersXTNewType", clear
+use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
 
-NEED TO ADD DISAGGREATED DATA TO ABOVE DATASET
+drop if contractType == 0
+
+gen total1 = consumption if contractType == 1
+gen total2 = consumption if contractType == 2
+gen total3 = consumption if contractType == 3
+
+collapse total*, by(datevar)
+
+
+#delimit ;
+
+twoway  (tsline total1, lpattern(solid))
+        (tsline total2, lpattern(shortdash))
+        (tsline total3, lpattern(longdash)),
+          ytitle(Consumption)
+          ttitle("")
+          ylabel(,ang(h))
+          title("")
+          legend( order(1 "Always" 2 "Join" 3 "Left")
+                                              cols(3) region(lstyle(none)));
+
+graph export "$RUTA\figures\totalTypeContract.png", replace
+                                            width(10000) height(8000);
+
+#delimit cr
+
+
+*** DISAGGREGATE CONSUMPTION BY TYPE OF CONTRACT ******************************* FIGURE X
+
+* ALWAYS IN THE PROGRAM --------------------------------------------------------
+
+use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
+
+keep if contractType == 1
+
+collapse punta valle nocturna, by(datevar)
+
+gen puntaHourly = (punta/30) / 5
+
+gen valleHourly = (valle/30) / 9
+
+gen nocturnaHourly = (nocturna/30) / 10
+
+
+#delimit ;
+
+twoway  (tsline puntaHourly, lpattern(solid))
+        (tsline valleHourly, lpattern(shortdash))
+        (tsline nocturnaHourly, lpattern(longdash)),
+          ytitle(Consumption)
+          ttitle("")
+          ylabel(,ang(h))
+          title("Always in the program")
+          legend( order(1 "Peak" 2 "Mid-peak" 3 "Off-peak")
+                                              cols(3) region(lstyle(none)))
+          saving("$RUTA\figures\temp\disaggregatedALL.gph", replace)
+          xsize(14) ysize(8);
+
+#delimit cr
+
+* JOINED THE PROGRAM -----------------------------------------------------------
+
+use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
+
+keep if contractType == 2
+
+collapse punta valle nocturna, by(datevar)
+
+gen puntaHourly = (punta/30) / 5
+
+gen valleHourly = (valle/30) / 9
+
+gen nocturnaHourly = (nocturna/30) / 10
+
+
+#delimit ;
+
+twoway  (tsline puntaHourly, lpattern(solid))
+        (tsline valleHourly, lpattern(shortdash))
+        (tsline nocturnaHourly, lpattern(longdash)),
+          ytitle(Consumption)
+          ttitle("")
+          ylabel(,ang(h))
+          title("Joined between 2011 - 2015")
+          legend( order(1 "Peak" 2 "Mid-peak" 3 "Off-peak")
+                                              cols(3) region(lstyle(none)))
+          saving("$RUTA\figures\temp\disaggregatedJoin.gph", replace)
+          xsize(14) ysize(8);
+
+#delimit cr
+
+* LEFT THE PROGRAM -------------------------------------------------------------
+
+use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
+
+keep if contractType == 3
+
+collapse punta valle nocturna, by(datevar)
+
+gen puntaHourly = (punta/30) / 5
+
+gen valleHourly = (valle/30) / 9
+
+gen nocturnaHourly = (nocturna/30) / 10
+
+#delimit ;
+
+twoway  (tsline puntaHourly, lpattern(solid))
+        (tsline valleHourly, lpattern(shortdash))
+        (tsline nocturnaHourly, lpattern(longdash)),
+          ytitle(Consumption)
+          ttitle("")
+          ylabel(,ang(h))
+          title("Left between 2011 - 2015")
+          legend( order(1 "Peak" 2 "Mid-peak" 3 "Off-peak")
+                                              cols(3) region(lstyle(none)))
+          saving("$RUTA\figures\temp\disaggregatedLeft.gph", replace)
+          xsize(14) ysize(8);
+
+* COMBINE ---------------------------------------------------------------------;
+
+grc1leg "$RUTA\figures\temp\disaggregatedALL"
+        "$RUTA\figures\temp\disaggregatedJoin"
+        "$RUTA\figures\temp\disaggregatedLeft"
+        ,
+        cols(1)
+        xcommon ycommon
+        ;
+
+
+graph export "$RUTA\figures\disaggregated.png", replace
+                                            width(14000) height(14000);
+
+#delimit cr
+
+*** DISAGGREGATE CONSUMPTION BY TIME BLOCK ************************************* FIGURE X
+
+* ALWAYS IN THE PROGRAM --------------------------------------------------------
+
+use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
+
+drop if contractType == 0
+
+gen peak1 = punta if contractType == 1
+gen peak2 = punta if contractType == 2
+gen peak3 = punta if contractType == 3
+
+gen midPeak1 = valle if contractType == 1
+gen midPeak2 = valle if contractType == 2
+gen midPeak3 = valle if contractType == 3
+
+gen offPeak1 = nocturna if contractType == 1
+gen offPeak2 = nocturna if contractType == 2
+gen offPeak3 = nocturna if contractType == 3
+
+
+collapse peak* midPeak* offPeak*, by(datevar)
+
+forvalues i = 1/3 {
+
+  gen peak`i'Hourly = (peak`i'/30) / 5
+
+  gen midPeak`i'Hourly = (midPeak`i'/30) / 9
+
+  gen offPeak`i'Hourly = (offPeak`i'/30) / 10
+
+}
+
+
+#delimit ;
+
+twoway  (tsline peak1Hourly, lpattern(solid))
+        (tsline peak2Hourly, lpattern(shortdash))
+        (tsline peak3Hourly, lpattern(longdash)),
+          ytitle(Consumption)
+          ttitle("")
+          ylabel(,ang(h))
+          title("Peak")
+          legend( order(1 "Always" 2 "Join" 3 "Left")
+                                              cols(3) region(lstyle(none)))
+          saving("$RUTA\figures\temp\disaggregatedPeak.gph", replace)
+          xsize(14) ysize(8);
+
+twoway  (tsline midPeak1Hourly, lpattern(solid))
+        (tsline midPeak2Hourly, lpattern(shortdash))
+        (tsline midPeak3Hourly, lpattern(longdash)),
+          ytitle(Consumption)
+          ttitle("")
+          ylabel(,ang(h))
+          title("Mid-peak")
+          legend( order(1 "Always" 2 "Join" 3 "Left")
+                                              cols(3) region(lstyle(none)))
+          saving("$RUTA\figures\temp\disaggregatedMidPeak.gph", replace)
+          xsize(14) ysize(8);
+
+
+twoway  (tsline offPeak1Hourly, lpattern(solid))
+        (tsline offPeak2Hourly, lpattern(shortdash))
+        (tsline offPeak3Hourly, lpattern(longdash)),
+          ytitle(Consumption)
+          ttitle("")
+          ylabel(,ang(h))
+          title("Off-peak")
+          legend( order(1 "Always" 2 "Join" 3 "Left")
+                                              cols(3) region(lstyle(none)))
+          saving("$RUTA\figures\temp\disaggregatedOffPeak.gph", replace)
+          xsize(14) ysize(8);
+
+
+* COMBINE ---------------------------------------------------------------------;
+
+grc1leg "$RUTA\figures\temp\disaggregatedPeak"
+        "$RUTA\figures\temp\disaggregatedMidPeak"
+        "$RUTA\figures\temp\disaggregatedOffPeak"
+        ,
+        cols(1)
+        xcommon ycommon
+        ;
+
+
+graph export "$RUTA\figures\disaggregatedTimeBlock.png", replace
+                                            width(14000) height(14000);
+
+#delimit cr
+
+
 
 *** REGRESSIONS **************************************************************** FIGURE X
 
+use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
+
+drop if contractType == 0
+
+gen lnConsumption = ln(consumption)
 
 
+* Estimates for HH that JOINED -------------------------------------------------
 
-*** BACON DECOMPOSITION OF DID ************************************************* FIGURE X
+xtreg consumption i.datevar treatment if contractType == 2,                     ///
+                                                          fe cluster(contract)
+  // b=67.89 | p=0.025
+
+xtreg consumption i.datevar treatment if contractType == 2 | contractType == 1, ///
+                                                          fe cluster(contract)
+    // b=24 | p=.19
+
+* Estimates for HH that JOINED -------------------------------------------------
+
+xtreg consumption i.datevar treatment if contractType == 2,                     ///
+                                                          fe robust
+  // b=67.89 | p=0.025
+
+xtreg consumption i.datevar treatment if contractType == 2 | contractType == 1, ///
+                                                          fe robust
+
+    // b=24 | p=.19
 
 
+* Estimates for HH that LEFT -------------------------------------------------
+
+xtreg consumption i.datevar treatment if contractType == 3,                     ///
+                                                          fe robust
+  // b=16.28 | p=0.008
+
+xtreg consumption i.datevar treatment if contractType == 3 | contractType == 1, ///
+                                                          fe robust
+    // b=6.83 | p=.209
+
+
+// *** BACON DECOMPOSITION OF DID ************************************************* FIGURE X
+//
+// use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
+//
+// drop if contractType == 0
+//
+//
+// bacondecomp consumption treatment if contractType == 2
+//
+// * NEEDS A STRONGLY BALANCED PANEL
 
 *** BUNCHING ******************************************************************* FIGURE X
 
@@ -788,4 +1058,3 @@ graph export "$RUTA\figures\bunchingControl.png", replace
 
 *** END OF FILE ****************************************************************
 ********************************************************************************
-  width(10000) height(8000);

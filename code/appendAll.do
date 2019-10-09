@@ -13,6 +13,7 @@ Created: 20180129 | Last modified: 20190804
 version 14.2
 
 clear
+
 *** CONTROL ********************************************************************
 
 cap erase "$RUTA\data\control.dta"
@@ -164,6 +165,20 @@ sort contract year month timeBlock
 drop unique1
 
 
+gen punta = consumption if timeBlock == 6
+
+gen valle = consumption if timeBlock == 7
+
+gen nocturna = consumption if timeBlock == 8
+
+collapse year sucursal (first) provincia (first) canton (first) distrito        ///
+         location contract month treatment (sum) punta (sum) valle (sum)        ///
+				 nocturna                                                               ///
+        , by(unique)
+
+egen consumption = rowtotal(punta valle nocturna)                               // TESTING 1008
+
+
 * SAVE -------------------------------------------------------------------------
 
 save "$RUTA\data\treatment.dta", replace
@@ -176,10 +191,6 @@ save "$RUTA\data\treatment.dta", replace
 
 use "$RUTA\data\treatment.dta", clear
 
-collapse (first) year (first) sucursal (first) timeBlock (sum) consumption      /// UNRESOLVED: same contract could have different meter
-         (firstnm) provincia (firstnm) canton (firstnm) distrito                ///
-         (firstnm) location  (first) contract (mean) month (first) treatment    /// POTENTIAL ISSUE: same contract with different locations?
-         , by(unique)
 
 * APPEND BOTH TREATMENTS -------------------------------------------------------
 
@@ -191,7 +202,7 @@ drop timeBlock
 
 *** GROUP 1: Pair where one is missing and the other is not
 
-sort contract year month treatment    // needed for commands below
+gsort contract year month treatment    // needed for commands below
 
 gen pair = 0
 replace  pair = 1 if ( unique == unique[_n+1] ) &                               ///
@@ -234,7 +245,7 @@ save "$RUTA\data\temp\tempBoth.dta", replace
 use "$RUTA\data\temp\g1.dta", clear
 
 // all the pairs when one is missing are from treatment
-* count if treatment == 1 & consumption == .
+count if treatment == 1 & consumption == .
 
 collapse (mean) pair (mean) treatment (mean) year (mean) sucursal               ///
          (mean) consumption (firstnm) provincia  (firstnm) canton               ///
@@ -248,7 +259,6 @@ save "$RUTA\data\temp\g1NoDuplicates.dta", replace
 *** GROUP 2
 
 use "$RUTA\data\temp\g2.dta", clear
-
 
 // Drop if both in the pair are zero
 

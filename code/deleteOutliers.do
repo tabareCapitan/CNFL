@@ -19,18 +19,20 @@ clear
 
 use "$RUTA\data\both.dta", clear
 
-drop if consumption <= 0
-
-* sum consumption, de
-// There are almost 3M consumptions > 100000. Check for errors! (still true?)
-
+drop if consumption < 0
+  // 16 obs
+drop if consumption == 0
+  // 368,447 obs
 drop if consumption > 1000
+  // 3,441,297 obs
+
+                                                                        // WHATS GOING ON HERE???
 
 save "$RUTA\data\bothNoOutliers.dta", replace
 
 
 *** CONTROL ********************************************************************
-
+/*
 use "$RUTA\data\control.dta", clear
 
 drop if consumption <= 0
@@ -57,7 +59,7 @@ drop if consumption <= 0
 drop if consumption > 1000
 
 save "$RUTA\data\treatmentNoOutliers", replace
-
+*/
 
 *** END OF FILE ****************************************************************
 ********************************************************************************

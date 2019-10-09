@@ -18,16 +18,13 @@ cap ssc install gtools
 
   cap gtools, upgrade
 
-
 cap ssc install savesome
 
-cap ssc install bacondecomp
+*cap ssc install bacondecomp
 
 cap ssc install grc1leg
 
-cap ssc instal coefplot
-
-
+cap ssc install coefplot
 
 *** END OF FILE ****************************************************************
 ********************************************************************************

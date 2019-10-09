@@ -6,7 +6,7 @@ Authors:
 TabareCapitan.com
 
 Description:
-
+Import data from excel files
 
 Created: 20180128 | Last modified: 20190804
 *******************************************************************************/
