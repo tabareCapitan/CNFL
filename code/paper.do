@@ -8,12 +8,10 @@ TabareCapitan.com
 Description:
 
 
-Created: 20190929 | Last modified: 20190930
+Created: 20190929 | Last modified: 20191009
 *******************************************************************************/
 version 14.2
 
-browse
-%show_gui
 
 *** NUMBER OF CONTRACTS BY TYPE ************************************************ TABLE 2
 
@@ -22,7 +20,6 @@ use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
 gcollapse contractType, by(contract)
 
 tab contractType, mi
-
 
 *** MEAN CONSUMPTION FOR EACH TYPE IN AND OUT ********************************** FIGURE X
 
@@ -216,7 +213,7 @@ twoway  (kdensity consumption if treatment)
 graph export "$RUTA\figures\kdensityAll.png", replace
                                                 width(10000) height(8000);
 
-* ONLY CONTRACTS ON THE PROGRAM AT LEAST ONE MONTH -----------------------------
+* ONLY CONTRACTS ON THE PROGRAM AT LEAST ONE MONTH ----------------------------;
 
 drop if contractType == 0;
 
@@ -233,7 +230,7 @@ twoway  (kdensity consumption if treatment)
 graph export "$RUTA\figures\kdensityTVPcontracts.png", replace
                                                 width(10000) height(8000);
 
-* ONLY CONTRACTS THAT JOINED ---------------------------------------------------
+* ONLY CONTRACTS THAT JOINED --------------------------------------------------;
 
 twoway  (kdensity consumption if  treatment & contractType == 2)
         (kdensity consumption if !treatment & contractType == 2,
@@ -250,7 +247,7 @@ graph export "$RUTA\figures\kdensityTVPcontractsJoin.png", replace
                                               width(10000) height(8000);
 
 
-* ONLY CONTRACTS THAT LEFT -----------------------------------------------------
+* ONLY CONTRACTS THAT LEFT ----------------------------------------------------;
 
 twoway  (kdensity consumption if  treatment & contractType == 3)
         (kdensity consumption if !treatment & contractType == 3,
@@ -259,7 +256,7 @@ twoway  (kdensity consumption if  treatment & contractType == 3)
         xtitle(kWh)
         title("HH that left")
         legend(on order(1 "Time-variant pricing" 2 "Block pricing")
-                            ring(0) pos(1) cols(1) region(lcolor(none)))
+                            ring(0) pos(1) cols(2) region(lcolor(none)))
         saving("$RUTA\figures\temp\kernelLeft", replace)
         ;
 
@@ -267,7 +264,7 @@ graph export "$RUTA\figures\kdensityTVPcontractsLeft.png", replace
                                               width(10000) height(8000);
 
 
-*** COMBINE --------------------------------------------------------------------
+*** COMBINE -------------------------------------------------------------------;
 
 grc1leg       "$RUTA\figures\temp\kernelAll"
               "$RUTA\figures\temp\kernelAllTVP"
@@ -331,7 +328,7 @@ twoway  (tsline left2, recast(bar)),
         xline(0)
         ;
 
-graph export "$RUTA\figuresTables\numberLeftersPerMonth.png", replace
+graph export "$RUTA\figures\numberLeftersPerMonth.png", replace
                                                   width(10000) height(8000);
 
 #delimit cr
@@ -398,7 +395,7 @@ twoway  (spike nPeriod relativeEntry, sort),
         title("")
         ylabel(,ang(h))
         ytitle("Number of observations")
-        xtitle("Relative exit")
+        xtitle("Relative entry")
         ;
 
 graph export "$RUTA\figures\outInNPeriods.png", replace
@@ -476,6 +473,7 @@ graph export "$RUTA\figures\inOutNPeriods.png", replace
 
 #delimit cr
 
+
 *** TYPES 1,2: EVENT STUDY ***************************************************** FIGURE X
 
 use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
@@ -521,6 +519,7 @@ test $LAGS;
 // pvalue = .2869
 
 #delimit cr
+
 
 
 *** TYPE 2: EVENT STUDY ******************************************************** FIGURE X
@@ -978,18 +977,6 @@ use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
 
 drop if contractType == 0
 
-gen lnConsumption = ln(consumption)
-
-
-* Estimates for HH that JOINED -------------------------------------------------
-
-xtreg consumption i.datevar treatment if contractType == 2,                     ///
-                                                          fe cluster(contract)
-  // b=67.89 | p=0.025
-
-xtreg consumption i.datevar treatment if contractType == 2 | contractType == 1, ///
-                                                          fe cluster(contract)
-    // b=24 | p=.19
 
 * Estimates for HH that JOINED -------------------------------------------------
 
@@ -1014,7 +1001,7 @@ xtreg consumption i.datevar treatment if contractType == 3 | contractType == 1, 
     // b=6.83 | p=.209
 
 
-// *** BACON DECOMPOSITION OF DID ************************************************* FIGURE X
+*** BACON DECOMPOSITION OF DID ************************************************* FIGURE X
 //
 // use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
 //

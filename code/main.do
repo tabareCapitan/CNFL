@@ -8,7 +8,7 @@ TabareCapitan.com
 Description:
 Controls the flow of the code
 
-Created: 20190802 | Last modified: 20190929
+Created: 20190802 | Last modified: 20191009
 *******************************************************************************/
 version 14.2
 
@@ -42,21 +42,11 @@ run "$RUTA\code\deleteOutliers.do"                                              
 
 run "$RUTA\code\createStataPanels.do"                                           // DONE
 
-*run "$RUTA\code\classifyTreatment.do"                                          // PENDING
-
 run "$RUTA\code\tagContractType.do"                                             // DONE
 
 *** DATA ANALYSIS **************************************************************
 
 run "$RUTA\code\paper.do"                                                       // IN PROGRESS
-
-
-***
-run "$RUTA\code\treatmentAnalysis.do"                                           // USED ALL
-
-run "$RUTA\code\regressionAnalysis.do"                                          // PENDING
-
-run "$RUTA\code\bothAnalysis.do"                                                // USED ALL
 
 
 *** END OF FILE ****************************************************************
