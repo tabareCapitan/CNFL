@@ -381,6 +381,26 @@ graph export "$RUTA\figures\outInScatter.png", replace
 
 #delimit cr
 
+*** CONSUMPTION PATTERNS AFTER JOINING *****************************************
+
+keep if treatment == 1
+
+collapse demeanedConsumption, by(relativeEntry)
+
+#delimit ;
+
+twoway  (line demeanedConsumption relativeEntry, lpattern(solid)),
+          ytitle("Consumption (demeaned)")
+          ttitle("Relative enetry")
+          yline(0, lpattern(dash))
+          title("")
+          ;
+
+graph export "$RUTA\figures\consumptionAfterEntry.png", replace
+                                            width(10000) height(8000);
+
+#delimit cr
+
 *** JOIN: PLOT # OBS IN EACH MONTH  ******************************************** FIGURE X
 
 count if relativeEntry < 0  // 256
@@ -399,6 +419,34 @@ twoway  (spike nPeriod relativeEntry, sort),
         ;
 
 graph export "$RUTA\figures\outInNPeriods.png", replace
+                                                  width(10000) height(8000);
+
+
+#delimit cr
+
+
+
+*** ALWAYS TREATED: PLOT # OBS IN EACH MONTH  ********************************** FIGURE X
+
+
+use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
+
+* PREPARE ----------------------------------------------------------------------
+
+keep if contractType == 1
+
+egen nPeriod = count(year), by(datevar)
+
+#delimit ;
+
+twoway  (spike nPeriod datevar, sort),
+        title("")
+        ylabel(,ang(h))
+        ytitle("Number of observations")
+        xtitle("Date")
+        ;
+
+graph export "$RUTA\figures\inObs.png", replace
                                                   width(10000) height(8000);
 
 
@@ -447,6 +495,27 @@ twoway (scatter demeanedConsumption relativeLeft, sort msize (tiny) )
 
 graph export "$RUTA\figures\inOutScatter.png", replace
                                                   width(10000) height(8000);
+
+#delimit cr
+
+
+*** CONSUMPTION PATTERNS BEFORE LEAVING ****************************************
+
+keep if treatment == 1
+
+collapse demeanedConsumption, by(relativeLeft)
+
+#delimit ;
+
+twoway  (line demeanedConsumption relativeLeft, lpattern(solid)),
+          ytitle("Consumption (demeaned)")
+          ttitle("Relative exit")
+          yline(0, lpattern(dash))
+          title("")
+          ;
+
+graph export "$RUTA\figures\consumptionBeforeExit.png", replace
+                                            width(10000) height(8000);
 
 #delimit cr
 
@@ -663,6 +732,79 @@ keep if contractType == 3
 gen left2 = left[_n-1] == 1
 
 rename left2  first
+* 24 MONTHS --------------------------------------------------------------------
+
+global LEADS "F24.first F23.first F22.first F21.first F20.first F19.first F18.first F17.first F16.first F15.first F14.first F13.first F12.first F11.first F10.first F9.first F8.first F7.first F6.first F5.first F4.first F3.first F2.first F.first"
+
+global LAGS  "L.first L2.first L3.first L4.first L5.first L6.first L7.first L8.first L9.first L10.first L11.first L12.first L13.first L14.first L15.first L16.first L17.first L18.first L19.first L20.first L21.first L22.first L23.first L24.first"
+
+
+xtreg consumption i.datevar $LEADS first $LAGS,  fe cluster(contract)
+
+#delimit ;
+
+coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
+          levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
+          legend(order(1 "99%" 2 "95%" 3 "90%" )
+                                  ring(0) pos(1) col(1) region(lcolor(none)))
+          vertical
+          title("")
+          subtitle("")
+          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xlabel(1 "-24" 4 "-21" 7 "-18" 10 "-15" 13 "12" 16 "9" 19 "6" 22 "3"
+          25 "Exit", labsize(small) )
+          ;
+
+
+graph export "$RUTA\figures\eventStudyType3_24months.png", replace
+                                                   width(10000) height(8000);
+
+test $LEADS;
+
+// Prob > F = 0
+
+test $LAGS;
+
+// pvalue = .4399
+
+#delimit cr
+
+* 12 MONTHS --------------------------------------------------------------------
+
+global LEADS "F12.first F11.first F10.first F9.first F8.first F7.first F6.first F5.first F4.first F3.first F2.first F.first"
+
+global LAGS  "L.first L2.first L3.first L4.first L5.first L6.first L7.first L8.first L9.first L10.first L11.first L12.first"
+
+
+xtreg consumption i.datevar $LEADS first $LAGS,  fe cluster(contract)
+
+#delimit ;
+
+coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
+          levels(99 95 90) ciopts(lwidth(2 ..) lcolor(*.2 *.4 *.6 *.8 *1))
+          legend(order(1 "99%" 2 "95%" 3 "90%" )
+                                  ring(0) pos(1) col(1) region(lcolor(none)))
+          vertical
+          title("")
+          subtitle("")
+          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xlabel(1 "-12" 4 "-9" 7 "-6" 10 "-3" 13 "Exit" 16 "3" 19 "6" 22 "9"
+          25 "12", labsize(small) )
+          ;
+
+
+graph export "$RUTA\figures\eventStudyType3_12months.png", replace
+                                                   width(10000) height(8000);
+
+test $LEADS;
+
+// Prob > F = 0
+
+test $LAGS;
+
+// pvalue = .4399
+
+#delimit cr
 
 
 * 6 MONTHS ---------------------------------------------------------------------
