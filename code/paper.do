@@ -732,6 +732,7 @@ keep if contractType == 3
 gen left2 = left[_n-1] == 1
 
 rename left2  first
+
 * 24 MONTHS --------------------------------------------------------------------
 
 global LEADS "F24.first F23.first F22.first F21.first F20.first F19.first F18.first F17.first F16.first F15.first F14.first F13.first F12.first F11.first F10.first F9.first F8.first F7.first F6.first F5.first F4.first F3.first F2.first F.first"
@@ -750,7 +751,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative exit") ytitle(kWh) ylabel(,ang(h))
           xlabel(1 "-24" 4 "-21" 7 "-18" 10 "-15" 13 "12" 16 "9" 19 "6" 22 "3"
           25 "Exit", labsize(small) )
           ;
@@ -787,7 +788,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative exit") ytitle(kWh) ylabel(,ang(h))
           xlabel(1 "-12" 4 "-9" 7 "-6" 10 "-3" 13 "Exit" 16 "3" 19 "6" 22 "9"
           25 "12", labsize(small) )
           ;
@@ -825,7 +826,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative exit") ytitle(kWh) ylabel(,ang(h))
           xlabel(1 "-6" 4 "-3" 7 "0" 10 "3" 13 "6", labsize(small) )
           ;
 
