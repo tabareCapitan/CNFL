@@ -1,0 +1,36 @@
+----------------------------------------------------
+LIST OF FIGURES
+	Figure 1. Mean  consumption by group and treatment status
+	Figure 2. Event-study specification for households that joined the program
+	Figure 3. Event-study specification for households that left the program
+	Figure 4. Behavioral changes in response to TVP
+	Figure 5. Only behavioral changes vs behavioral and technological changes 
+
+----------------------------------------------------
+LIST OF TABLES
+	Table 1. Pricing schedules
+	Table 2. Number of households of each type
+	Table 3. Effect of the TVP program on total consumption
+
+--------------------------------------------------
+LIST OF APPENDICES
+	Appendix A. Self-selection into the program
+		Figure A1. Consumption over time by type of contract
+		Figure A2. Consumption by group and treatment status
+	Appendix B. Households that joined between 2011 and 2015	
+		Figure B1. Consumption trend after joining the program
+		Figure B2. Number of households joining in each period
+		Figure B3. Number of observations in each relative period
+		Figure B4. Demeaned consumption by relative period
+	Appendix C. Households that left between 2011 and 2015
+		Figure C1. Consumption trend before leaving the program
+		Figure C2. Number of households leaving in each period
+		Figure C3. Number of observations in each relative period
+		Figure C4. Demeaned consumption by relative period
+	Appendix D. Total consumption over time by type of households
+		Figure D1. Total consumption over time by type of households
+	Appendix E. The effect of TVP on peak consumption
+		Figure E1. Disaggregated consumption by type of household
+		Figure E2. Consumption over time by time block and type of contract
+	Appendix F. Bunching
+		Figure F1. Bunching.

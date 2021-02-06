@@ -4,7 +4,7 @@
 
 /data/*
 
-/presentations/*
+/talks/*
 
 /papers/*
 
@@ -15,3 +15,23 @@
 /draft/*
 
 /GB19/*
+
+/submission/*
+
+/myPaper/_feedback/*
+
+/myPaper/_oldDrafts/*
+
+/myPaper/_preprint/*
+
+
+/# Latex trash
+
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz

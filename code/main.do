@@ -18,7 +18,7 @@ version 14.2
 ***
 ********************************************************************************
 
-global RUTA "D:\Dropbox\research\_active\CNFL"
+global RUTA "D:\Dropbox\T\r\CNFL"
 
 run "$RUTA\code\settings.do"
 
