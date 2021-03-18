@@ -26,9 +26,12 @@
 \usepackage[section]{placeins}          % To control figures' placement
                                         % with \FloatBarrier
 \usepackage{indentfirst}                % I like consistency!
+\usepackage[nottoc]{tocbibind}   % References in table of contents
 \usepackage[toc,page]{appendix}         % To add appendices
 \usepackage[authoryear]{natbib}         % References
   \bibliographystyle{chicago}           % -> style
+
+\newcommand\fnote[1]{\captionsetup{font=small}\caption*{#1}}
 
 \newcommand{\possessivecite}[1]{\citeauthor{#1}'s \citeyear{#1}}
 \newcommand{\possessivecitet}[1]{\citeauthor{#1}'s (\citeyear{#1})}

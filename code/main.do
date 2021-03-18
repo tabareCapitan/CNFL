@@ -36,7 +36,7 @@ run "$RUTA\code\createPanels.do"                                                
 
 run "$RUTA\code\appendAll.do"                                                   // PENDING
 
-*run "$RUTA\code\deleteTemp.do"                                                  // PENDING
+*run "$RUTA\code\deleteTemp.do"                                                 // PENDING
 
 run "$RUTA\code\deleteOutliers.do"                                              // PENDING
 
@@ -46,8 +46,11 @@ run "$RUTA\code\tagContractType.do"                                             
 
 *** DATA ANALYSIS **************************************************************
 
-run "$RUTA\code\paper.do"                                                       // IN PROGRESS
+run "$RUTA\code\paper.do"                                                       // PENDING
 
+run "$RUTA\code\counterfactualBilling.do"                                       // DONE
+
+run "$RUTA\code\extras.do"                                                      // IN PROGRESS
 
 *** END OF FILE ****************************************************************
 ********************************************************************************

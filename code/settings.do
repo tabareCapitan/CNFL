@@ -14,10 +14,15 @@ version 14.2
 
 ********************************************************************************
 
-graph set window fontface "Times New Roman"
+// graph set window fontface "Times New Roman"
+//
+// set scheme s1mono
 
-set scheme s1mono
+net install cleanplots, from("https://tdmize.github.io/data/cleanplots")
 
+set scheme cleanplots
+
+graph set window fontface "Merriweather"
 
 
 *** END OF FILE ****************************************************************

@@ -43,7 +43,7 @@ sum consumption if contractType == 0 & treatment == 0
 
 local mean2 = string(r(mean),"%04.2f")
 
-local mean2pos = r(mean) + 0.02
+local mean2pos = r(mean) + 0.03
 
 replace means = r(mean) in 2
 
@@ -53,7 +53,7 @@ sum consumption if contractType == 1 & treatment == 1
 
 local mean4 = string(r(mean),"%04.2f")
 
-local mean4pos = r(mean) + 0.02
+local mean4pos = r(mean) + 0.03
 
 replace means = r(mean) in 4
 
@@ -63,7 +63,7 @@ sum consumption if contractType == 2 & treatment == 0
 
 local mean6 = string(r(mean),"%04.2f")
 
-local mean6pos = r(mean) + 0.02
+local mean6pos = r(mean) + 0.03
 
 replace means = r(mean) in 6
 
@@ -73,7 +73,7 @@ sum consumption if contractType == 2 & treatment == 1
 
 local mean7 = string(r(mean),"%04.2f")
 
-local mean7pos = r(mean) + 0.02
+local mean7pos = r(mean) + 0.03
 
 replace means = r(mean) in 7
 
@@ -83,7 +83,7 @@ sum consumption if contractType == 3 & treatment == 0
 
 local mean9 = string(r(mean),"%04.2f")
 
-local mean9pos = r(mean) + 0.02
+local mean9pos = r(mean) + 0.03
 
 replace means = r(mean) in 9
 
@@ -93,7 +93,7 @@ sum consumption if contractType == 3 & treatment == 1
 
 local mean10 = string(r(mean),"%04.2f")
 
-local mean10pos = r(mean) + 0.02
+local mean10pos = r(mean) + 0.03
 
 replace means = r(mean) in 10
 
@@ -117,37 +117,37 @@ twoway  (bar means position if position == 2  ,
         title("")
         subtitle("")
 
-        ytitle("Consumption (kWh)")
+        ytitle("Consumption (kW h)")
         ylabel(0(50)500, ang(h))
 
         xtitle("")
-        xlabel(1 " " 2 "Always out" 4 "Always in" 6.5 "Join" 9.5 "Left" 11 " ")
+        xlabel(1 " " 2 "Group O" 4 "Group I" 6.5 "Group J" 9.5 "Group L" 11 " ")
 
         legend( order(1 "Out" 2 "In") ring(0) pos(11) cols(1)
                                                       region(lcolor(none)) )
 
         text(`mean2pos' 1.55 "`mean2'",
-          placement("ne") orientation("horizontal") size("medsmall")
+          placement("ne") orientation("horizontal") size("small")
           color("black")
         )
         text(`mean4pos' 3.55 "`mean4'",
-          placement("ne") orientation("horizontal") size("medsmall")
+          placement("ne") orientation("horizontal") size("small")
           color("black")
         )
         text(`mean6pos' 5.55 "`mean6'",
-          placement("ne") orientation("horizontal") size("medsmall")
+          placement("ne") orientation("horizontal") size("small")
           color("black")
         )
         text(`mean7pos' 6.55 "`mean7'",
-          placement("ne") orientation("horizontal") size("medsmall")
+          placement("ne") orientation("horizontal") size("small")
           color("black")
         )
         text(`mean9pos' 8.55 "`mean9'",
-          placement("ne") orientation("horizontal") size("medsmall")
+          placement("ne") orientation("horizontal") size("small")
           color("black")
         )
         text(`mean10pos' 9.55 "`mean10'",
-          placement("ne") orientation("horizontal") size("medsmall")
+          placement("ne") orientation("horizontal") size("small")
           color("black")
         )
         ;
@@ -172,17 +172,17 @@ gcollapse tConsumption cConsumption year, by(datevar)
 #delimit ;
 
 twoway (tsline cConsumption, lpattern(dash)) (tsline tConsumption) ,
-    ytitle(Consumption (kw))
+    ytitle(Consumption (kW h))
     ttitle("")
     title("")
     subtitle("")
     legend(off)
     text(248 657 "Block pricing",
-      placement("ne") orientation("horizontal") size("medsmall")
+      placement("ne") orientation("horizontal") size("small")
       color("black")
     )
     text(435 652 "Time-variant pricing",
-      placement("ne") orientation("horizontal") size("medsmall")
+      placement("ne") orientation("horizontal") size("small")
       color("black")
     )
     ;
@@ -200,69 +200,55 @@ use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
 
 #delimit ;
 
-twoway  (kdensity consumption if treatment)
-        (kdensity consumption if !treatment, lpattern(dash)),
+twoway  (kdensity consumption if treatment, lcolor(red))
+        (kdensity consumption if !treatment, lcolor(blue) lpattern(dash)),
         yscale(off)
-        xtitle(kWh)
-        title("All households")
-        legend(on order(1 "Time-variant pricing" 2 "Block pricing")
+        xtitle(kW h)
+        title("Groups O, I, J, L")
+        legend(on order(1 "Time-varying pricing" 2 "Block pricing")
                             ring(0) pos(1) cols(1) region(lcolor(none)))
         saving("$RUTA\figures\temp\kernelAll", replace)
         ;
-
-graph export "$RUTA\figures\kdensityAll.png", replace
-                                                width(10000) height(8000);
 
 * ONLY CONTRACTS ON THE PROGRAM AT LEAST ONE MONTH ----------------------------;
 
 drop if contractType == 0;
 
-twoway  (kdensity consumption if treatment)
-        (kdensity consumption if !treatment, lpattern(dash)),
+twoway  (kdensity consumption if treatment, lcolor(red))
+        (kdensity consumption if !treatment, lcolor(blue) lpattern(dash)),
         yscale(off)
-        xtitle(kWh)
-        title("All HH in the program")
-        legend(on order(1 "Time-variant pricing" 2 "Block pricing")
+        xtitle(kW h)
+        title("Groups I, J, L")
+        legend(on order(1 "Time-varying pricing" 2 "Block pricing")
                             ring(0) pos(1) cols(1) region(lcolor(none)))
         saving("$RUTA\figures\temp\kernelAllTVP", replace)
         ;
 
-graph export "$RUTA\figures\kdensityTVPcontracts.png", replace
-                                                width(10000) height(8000);
-
 * ONLY CONTRACTS THAT JOINED --------------------------------------------------;
 
-twoway  (kdensity consumption if  treatment & contractType == 2)
+twoway  (kdensity consumption if  treatment & contractType == 2, lcolor(red))
         (kdensity consumption if !treatment & contractType == 2,
-                                                              lpattern(dash)),
+                                                lcolor(blue)  lpattern(dash)),
         yscale(off)
-        xtitle(kWh)
-        title("HH that joined")
-        legend(on order(1 "Time-variant pricing" 2 "Block pricing")
+        xtitle(kW h)
+        title("Group J")
+        legend(on order(1 "Time-varying pricing" 2 "Block pricing")
                             ring(0) pos(1) cols(1) region(lcolor(none)))
         saving("$RUTA\figures\temp\kernelJoin", replace)
         ;
 
-graph export "$RUTA\figures\kdensityTVPcontractsJoin.png", replace
-                                              width(10000) height(8000);
-
-
 * ONLY CONTRACTS THAT LEFT ----------------------------------------------------;
 
-twoway  (kdensity consumption if  treatment & contractType == 3)
+twoway  (kdensity consumption if  treatment & contractType == 3, lcolor(red))
         (kdensity consumption if !treatment & contractType == 3,
-                                                              lpattern(dash)),
+                                                lcolor(blue)   lpattern(dash)),
         yscale(off)
-        xtitle(kWh)
-        title("HH that left")
-        legend(on order(1 "Time-variant pricing" 2 "Block pricing")
+        xtitle(kW h)
+        title("Group L")
+        legend(on order(1 "Time-varying pricing" 2 "Block pricing")
                             ring(0) pos(1) cols(2) region(lcolor(none)))
         saving("$RUTA\figures\temp\kernelLeft", replace)
         ;
-
-graph export "$RUTA\figures\kdensityTVPcontractsLeft.png", replace
-                                              width(10000) height(8000);
-
 
 *** COMBINE -------------------------------------------------------------------;
 
@@ -293,7 +279,7 @@ collapse (sum) join2, by(datevar)
 
 #delimit ;
 
-twoway  (tsline join2, recast(bar)),
+twoway  (tsline join2, recast(bar) fcolor(gs10)),
         yscale(on)
         ylabel(,ang(h))
         ytitle(Number of contracts)
@@ -319,7 +305,7 @@ collapse (sum) left2, by(datevar)
 
 #delimit ;
 
-twoway  (tsline left2, recast(bar)),
+twoway  (tsline left2, recast(bar) fcolor(gs10)),
         yscale(on)
         ylabel(,ang(h))
         ytitle(Number of contracts)
@@ -364,14 +350,18 @@ drop if demeanedC > 500 | demeanedC < -500
 
 #delimit ;
 
-twoway (scatter demeanedConsumption relativeEntry, sort msize (tiny) jitter(2))
-       (lfit demeanedConsumption relativeEntry if relativeEntry < 0)
-       (lfit demeanedConsumption relativeEntry if relativeEntry >= 0)
+twoway (scatter demeanedConsumption relativeEntry, sort msize (tiny) jitter(2)
+                                                                fcolor(black))
+       (lfit demeanedConsumption relativeEntry if relativeEntry < 0,
+                                                                lcolor(red))
+       (lfit demeanedConsumption relativeEntry if relativeEntry >= 0,
+                                                                lcolor(red))
        ,
-       yscale(off)
-       xtitle(Relative entry)
+       yscale(on)
+       ytitle("Demeaned consumption (kW h)")
+       xtitle("Relative periods (0 = Join TVP)")
        title("")
-       legend(on order(1 "Consumption (Demeaned)" 2 "Fitted line (out)"
+       legend(off order(1 "Consumption (Demeaned)" 2 "Fitted line (out)"
        3 "Fitted line (in)" ) cols(3))
        xline(0)
        ;
@@ -390,8 +380,8 @@ collapse demeanedConsumption, by(relativeEntry)
 #delimit ;
 
 twoway  (line demeanedConsumption relativeEntry, lpattern(solid)),
-          ytitle("Consumption (demeaned)")
-          ttitle("Relative enetry")
+          ytitle("Demeaned consumption (kW h)")
+          ttitle("Relative periods (0 = Join TVP)")
           yline(0, lpattern(dash))
           title("")
           ;
@@ -402,6 +392,8 @@ graph export "$RUTA\figures\consumptionAfterEntry.png", replace
 #delimit cr
 
 *** JOIN: PLOT # OBS IN EACH MONTH  ******************************************** FIGURE X
+
+// need to reload data because of the collapse above
 
 count if relativeEntry < 0  // 256
 
@@ -415,7 +407,7 @@ twoway  (spike nPeriod relativeEntry, sort),
         title("")
         ylabel(,ang(h))
         ytitle("Number of observations")
-        xtitle("Relative entry")
+        xtitle("Relative entry (0 = Join TVP)")
         ;
 
 graph export "$RUTA\figures\outInNPeriods.png", replace
@@ -427,7 +419,6 @@ graph export "$RUTA\figures\outInNPeriods.png", replace
 
 
 *** ALWAYS TREATED: PLOT # OBS IN EACH MONTH  ********************************** FIGURE X
-
 
 use "$RUTA\data\bothNoOutliersXTNewType.dta", clear
 
@@ -482,13 +473,18 @@ drop if demeanedC > 300 | demeanedC < -300
 
 #delimit ;
 
-twoway (scatter demeanedConsumption relativeLeft, sort msize (tiny) )
-       (lfit demeanedConsumption relativeLeft if relativeLeft < 0)
-       (lfit demeanedConsumption relativeLeft if relativeLeft >= 0),
-       yscale(off)
-       xtitle("Relative exit")
+twoway (scatter demeanedConsumption relativeLeft, sort msize (tiny)  jitter(2)
+                                                                fcolor(black))
+       (lfit demeanedConsumption relativeLeft if relativeLeft < 0,
+                                                                lcolor(red))
+       (lfit demeanedConsumption relativeLeft if relativeLeft >= 0,
+                                                                lcolor(red))
+        ,
+       ytitle("Demeaned consumption (kW h)")
+       yscale(on)
+       xtitle("Relative periods (0 = Left TVP)")
        title("")
-       legend(on order(1 "Consumption (Demeaned)" 2 "Fitted line (in)"
+       legend(off order(1 "Consumption (Demeaned)" 2 "Fitted line (in)"
                                             3 "Fitted line (out)" ) cols(3))
        xline(0)
 ;
@@ -508,8 +504,8 @@ collapse demeanedConsumption, by(relativeLeft)
 #delimit ;
 
 twoway  (line demeanedConsumption relativeLeft, lpattern(solid)),
-          ytitle("Consumption (demeaned)")
-          ttitle("Relative exit")
+          ytitle("Demeaned consumption (kW h)")
+          ttitle("Relative periods (0 = Left TVP)")
           yline(0, lpattern(dash))
           title("")
           ;
@@ -530,7 +526,7 @@ egen nPeriod = count(year), by(relativeLeft)
 
 #delimit ;
 
-twoway  (spike nPeriod relativeLeft, sort),
+twoway  (spike nPeriod relativeLeft, sort fcolor(gs10)),
         title("")
         ylabel(,ang(h))
         ytitle("Number of observations")
@@ -571,7 +567,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative periods (0 = Join TVP)") ytitle(kW h) ylabel(,ang(h))
           xlabel(1 "-6" 4 "-3" 7 "0" 10 "3" 13 "6", labsize(small) )
           ;
 
@@ -619,7 +615,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative periods (0 = Join TVP)") ytitle(kW h) ylabel(,ang(h))
           xlabel(1 "-6" 4 "-3" 7 "0" 10 "3" 13 "6", labsize(small) )
           ;
 
@@ -667,7 +663,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative entry") ytitle(kW h) ylabel(,ang(h))
           xlabel(1 "-6" 4 "-3" 7 "0" 10 "3" 13 "6", labsize(small) )
           ;
 
@@ -704,7 +700,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative periods (0 = Join TVP)") ytitle(kW h) ylabel(,ang(h))
           xlabel(1 "-3" 4 "Exit" 7 "3", labsize(small) )
           ;
 
@@ -751,7 +747,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative exit") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative periods (0 = Left TVP)") ytitle(kW h) ylabel(,ang(h))
           xlabel(1 "-24" 4 "-21" 7 "-18" 10 "-15" 13 "12" 16 "9" 19 "6" 22 "3"
           25 "Exit", labsize(small) )
           ;
@@ -788,7 +784,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative exit") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative exit") ytitle(kW h) ylabel(,ang(h))
           xlabel(1 "-12" 4 "-9" 7 "-6" 10 "-3" 13 "Exit" 16 "3" 19 "6" 22 "9"
           25 "12", labsize(small) )
           ;
@@ -826,7 +822,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative exit") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative periods (0 = Left TVP)") ytitle(kW h) ylabel(,ang(h))
           xlabel(1 "-6" 4 "-3" 7 "0" 10 "3" 13 "6", labsize(small) )
           ;
 
@@ -863,7 +859,7 @@ coefplot, keep(F* first  L*)  yline(0) msymbol(d) mcolor(white)
           vertical
           title("")
           subtitle("")
-          xtitle("Relative entry") ytitle(kWh) ylabel(,ang(h))
+          xtitle("Relative periods (0 = Left TVP)") ytitle(kW h) ylabel(,ang(h))
           xlabel(1 "-3" 4 "Exit" 7 "3", labsize(small) )
           ;
 
@@ -898,15 +894,16 @@ collapse total*, by(datevar)
 
 #delimit ;
 
-twoway  (tsline total1, lpattern(solid))
-        (tsline total2, lpattern(shortdash))
-        (tsline total3, lpattern(longdash)),
-          ytitle(Consumption)
+twoway  (tsline total1, lpattern(solid) lcolor(black))
+        (tsline total2, lpattern(shortdash) lcolor(red))
+        (tsline total3, lpattern(longdash) lcolor(blue)),
+          ytitle(kW h)
           ttitle("")
           ylabel(,ang(h))
           title("")
-          legend( order(1 "Always" 2 "Join" 3 "Left")
-                                              cols(3) region(lstyle(none)));
+          legend( order(1 "Group I" 2 "Group J" 3 "Group L")
+                          ring(0) pos(1) cols(1) region(lstyle(none)));
+
 
 graph export "$RUTA\figures\totalTypeContract.png", replace
                                             width(10000) height(8000);
@@ -933,13 +930,13 @@ gen nocturnaHourly = (nocturna/30) / 10
 
 #delimit ;
 
-twoway  (tsline puntaHourly, lpattern(solid))
-        (tsline valleHourly, lpattern(shortdash))
-        (tsline nocturnaHourly, lpattern(longdash)),
-          ytitle(Consumption)
+twoway  (tsline puntaHourly, lpattern(solid) lcolor(black))
+        (tsline valleHourly, lpattern(shortdash) lcolor(red))
+        (tsline nocturnaHourly, lpattern(longdash) lcolor(blue)),
+          ytitle(kW h)
           ttitle("")
           ylabel(,ang(h))
-          title("Always in the program")
+          title("Group I")
           legend( order(1 "Peak" 2 "Mid-peak" 3 "Off-peak")
                                               cols(3) region(lstyle(none)))
           saving("$RUTA\figures\temp\disaggregatedALL.gph", replace)
@@ -964,13 +961,13 @@ gen nocturnaHourly = (nocturna/30) / 10
 
 #delimit ;
 
-twoway  (tsline puntaHourly, lpattern(solid))
-        (tsline valleHourly, lpattern(shortdash))
-        (tsline nocturnaHourly, lpattern(longdash)),
-          ytitle(Consumption)
+twoway  (tsline puntaHourly, lpattern(solid) lcolor(black))
+        (tsline valleHourly, lpattern(shortdash) lcolor(red))
+        (tsline nocturnaHourly, lpattern(longdash) lcolor(blue)),
+          ytitle(kW h)
           ttitle("")
           ylabel(,ang(h))
-          title("Joined between 2011 - 2015")
+          title("Group J")
           legend( order(1 "Peak" 2 "Mid-peak" 3 "Off-peak")
                                               cols(3) region(lstyle(none)))
           saving("$RUTA\figures\temp\disaggregatedJoin.gph", replace)
@@ -994,13 +991,13 @@ gen nocturnaHourly = (nocturna/30) / 10
 
 #delimit ;
 
-twoway  (tsline puntaHourly, lpattern(solid))
-        (tsline valleHourly, lpattern(shortdash))
-        (tsline nocturnaHourly, lpattern(longdash)),
-          ytitle(Consumption)
+twoway  (tsline puntaHourly, lpattern(solid) lcolor(black))
+        (tsline valleHourly, lpattern(shortdash) lcolor(red))
+        (tsline nocturnaHourly, lpattern(longdash) lcolor(blue)),
+          ytitle(kW h)
           ttitle("")
           ylabel(,ang(h))
-          title("Left between 2011 - 2015")
+          title("Group L")
           legend( order(1 "Peak" 2 "Mid-peak" 3 "Off-peak")
                                               cols(3) region(lstyle(none)))
           saving("$RUTA\figures\temp\disaggregatedLeft.gph", replace)
@@ -1058,39 +1055,39 @@ forvalues i = 1/3 {
 
 #delimit ;
 
-twoway  (tsline peak1Hourly, lpattern(solid))
-        (tsline peak2Hourly, lpattern(shortdash))
-        (tsline peak3Hourly, lpattern(longdash)),
-          ytitle(Consumption)
+twoway  (tsline peak1Hourly, lpattern(solid) lcolor(black))
+        (tsline peak2Hourly, lpattern(shortdash) lcolor(red))
+        (tsline peak3Hourly, lpattern(longdash) lcolor(blue)),
+          ytitle(kW h)
           ttitle("")
           ylabel(,ang(h))
           title("Peak")
-          legend( order(1 "Always" 2 "Join" 3 "Left")
+          legend( order(1 "Group I" 2 "Group J" 3 "Group L")
                                               cols(3) region(lstyle(none)))
           saving("$RUTA\figures\temp\disaggregatedPeak.gph", replace)
           xsize(14) ysize(8);
 
-twoway  (tsline midPeak1Hourly, lpattern(solid))
-        (tsline midPeak2Hourly, lpattern(shortdash))
-        (tsline midPeak3Hourly, lpattern(longdash)),
-          ytitle(Consumption)
+twoway  (tsline midPeak1Hourly, lpattern(solid) lcolor(black))
+        (tsline midPeak2Hourly, lpattern(shortdash) lcolor(red))
+        (tsline midPeak3Hourly, lpattern(longdash) lcolor(blue)),
+          ytitle(kW h)
           ttitle("")
           ylabel(,ang(h))
           title("Mid-peak")
-          legend( order(1 "Always" 2 "Join" 3 "Left")
+          legend( order(1 "Group I" 2 "Group J" 3 "Group L")
                                               cols(3) region(lstyle(none)))
           saving("$RUTA\figures\temp\disaggregatedMidPeak.gph", replace)
           xsize(14) ysize(8);
 
 
-twoway  (tsline offPeak1Hourly, lpattern(solid))
-        (tsline offPeak2Hourly, lpattern(shortdash))
-        (tsline offPeak3Hourly, lpattern(longdash)),
-          ytitle(Consumption)
+twoway  (tsline offPeak1Hourly, lpattern(solid) lcolor(black))
+        (tsline offPeak2Hourly, lpattern(shortdash) lcolor(red))
+        (tsline offPeak3Hourly, lpattern(longdash) lcolor(blue)),
+          ytitle(kW h)
           ttitle("")
           ylabel(,ang(h))
           title("Off-peak")
-          legend( order(1 "Always" 2 "Join" 3 "Left")
+          legend( order(1 "Group I" 2 "Group J" 3 "Group L")
                                               cols(3) region(lstyle(none)))
           saving("$RUTA\figures\temp\disaggregatedOffPeak.gph", replace)
           xsize(14) ysize(8);
@@ -1169,15 +1166,16 @@ gen pricing = .
 #delimit ;
 
 twoway  (kdensity consumption )
-        (line pricing consumption, sort yaxis(2)),
-        ytitle(Consumption density)
-        ytitle(Marginal price per kWh, axis(2) orientation(rvertical))
+        (line pricing consumption, lpattern(dash) sort yaxis(2)),
+        ytitle("Density")
+        ytitle(Marginal price per kW h, axis(2) orientation(rvertical))
         ylabel(none, ang(h))
         yscale(on)
-        xtitle(kWh)
+        xtitle(kW h)
         title("")
         note("")
-        legend(on order(1 "Consumption" 2 "Pricing scheme"))
+        legend(on order(1 "Consumption" 2 "Pricing scheme")
+                                      region(lstyle(none)) ring(0) pos(1) )
         xline(200 300)
         ;
 
