@@ -35,7 +35,7 @@ In `./code/`:
 
 ## Replication instructions
 
-We want our work to be replicated. To that end, we include **one** script to replicate our research. The easiest way to replicate is to download the repository, edit  `main.do`, and run `main.do` (assuming the right software is installed and the raw data from the CNFL is obtained). <sup>[1](#foot_1)</sup>
+We want our work to be replicated. To that end, we include **one** script to replicate our research. The easiest way to replicate is to download the repository, edit  `main.do`, and run `main.do` (assuming the right software is installed and the raw data from the CNFL is obtained).<sup id="a1">[ 1](#f1)</sup>
 
 ### Required software
 - Stata (we used SE 14.2)
@@ -69,5 +69,6 @@ CNFL (repository)
 - Send me an email
 
 ---
+## Footnotes
 
-<a name="foot_1">1</a>: This project started a long time ago (back in 2015), I no longer follow the workflow used in this project. If you are looking for inspiration for your own workflow, I recommend [this guide](https://julianreif.com/guide/), which I have adapted and used in some of my newer work [(for example this one)](https://github.com/tabareCapitan/endowmentEffectInfo).
+<b id="f1">1.</b> This project started a long time ago (back in 2015), I no longer follow the workflow used in this project. If you are looking for inspiration for your own workflow, I recommend [this guide](https://julianreif.com/guide/), which I have adapted and used in some of my newer work [(for example this one)](https://github.com/tabareCapitan/endowmentEffectInfo). [↩](#a1)
