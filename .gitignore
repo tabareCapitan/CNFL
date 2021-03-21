@@ -8,14 +8,6 @@
 
 /papers/*
 
-/draft/oldDrafts/*
-
-/Costa Rica/*
-
-/draft/*
-
-/GB19/*
-
 /submission/*
 
 /myPaper/_feedback/*
@@ -35,3 +27,4 @@
 *.log
 *.out
 *.synctex.gz
+*.pct
