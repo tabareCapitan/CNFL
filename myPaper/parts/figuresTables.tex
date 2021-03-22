@@ -1,0 +1,107 @@
+\section{Tables and Figures}
+
+\subsection{Tables} % **********************************************************
+
+% Table 1 ----------------------------------------------------------------------
+
+\begin{table}[h]
+\centering
+\caption{Number of households in each group}
+\label{tab:groups}
+\begin{tabular}{@{}rcr@{}}
+\toprule
+\multicolumn{1}{l}{\textbf{Description}} & \multicolumn{1}{l}{\textbf{Group}} & \multicolumn{1}{l}{\textbf{Number of households}} \\ \midrule
+Only out of the program & $O$   & $436,865$ \\
+Only in the program     & $I$   & $6,826$   \\
+Joined the program      & $J$   & $106$     \\
+Left the program        & $L$   & $555$     \\ \midrule
+                        & Total & $444,352$ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+% Table 2 ----------------------------------------------------------------------
+
+\begin{table}[h]
+\centering
+\caption{: Effect of the TVP program on total consumption}
+\label{tab:estimates}
+\begin{tabular}{@{}rcccc@{}}
+\multicolumn{1}{l}{\textbf{}} & \multicolumn{2}{c}{\textbf{Join}} & \multicolumn{2}{c}{\textbf{Left}} \\
+\textbf{Data from groups:}    & \textbf{$I,J$}   & \textbf{$J$}   & \textbf{$I,L$}   & \textbf{$L$}   \\ \midrule
+$\beta^{DD}$           & 24.8    & 67.9  & 6.8     & 16.3   \\
+Two-sided pvalue       & 0.19    & 0.025 & 0.209   & 0.008  \\ \midrule
+Number of households   & 6,932   & 106   & 7,381   & 555    \\
+Number of observations & 289,917 & 4,571 & 310,694 & 25,348
+\end{tabular}
+\fnote{\\ \small{TWFE DD estimated with OLS. Dependent variable is monthly consumption in kW h.}}
+\end{table}
+
+\clearpage
+
+\subsection{Figures} % *********************************************************
+
+% Figure 1 ---------------------------------------------------------------------
+
+\begin{figure}[ht]
+  \caption{Pricing schedules}\label{fig:table1}
+  \begin{center}
+  {\includegraphics[width=0.6\textwidth]{./figures/table1.png}}
+  \end{center}
+\end{figure}
+
+\clearpage
+
+% Figure 2 ---------------------------------------------------------------------
+
+\begin{figure}[ht]
+  \caption{Mean consumption by group and treatment status}\label{fig:one}
+  \begin{center}
+  {\includegraphics[width=1\textwidth]{./figures/meansByContractType.png}}
+  \end{center}
+\end{figure}
+
+\clearpage
+
+% Figure 3 ---------------------------------------------------------------------
+
+\begin{figure}[ht]
+  \caption{Event-study specification for households that joined the program}\label{fig:two}
+  \begin{center}
+  {\includegraphics[width=1\textwidth]{./figures/eventStudyType1-2_6months.png}}
+  \end{center}
+\end{figure}
+
+\clearpage
+
+% Figure 4 ---------------------------------------------------------------------
+
+\begin{figure}[ht]
+  \caption{Event-study specification for households that left the program}\label{fig:three}
+  \begin{center}
+  {\includegraphics[width=1\textwidth]{./figures/eventStudyType3_6months.png}}
+  \end{center}
+\end{figure}
+
+\clearpage
+
+% Figure 5 ---------------------------------------------------------------------
+
+\begin{figure}[ht]
+  \caption{Behavioral changes in response to TVP}\label{fig:four}
+  \begin{center}
+  {\includegraphics[width=1\textwidth]{./figures/image4.png}}
+  \end{center}
+\end{figure}
+
+\clearpage
+
+% Figure 6 ---------------------------------------------------------------------
+
+\begin{figure}[ht]
+  \caption{Only behavioral changes vs behavioral and technological changes}\label{fig:five}
+  \begin{center}
+  {\includegraphics[width=1\textwidth]{./figures/image5.png}}
+  \end{center}
+\end{figure}
+
+\clearpage
