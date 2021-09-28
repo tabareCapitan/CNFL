@@ -10,11 +10,8 @@
 
 /submission/*
 
-/myPaper/_feedback/*
+/myPaper/
 
-/myPaper/_oldDrafts/*
-
-/myPaper/_preprint/*
 
 
 /# Latex trash
