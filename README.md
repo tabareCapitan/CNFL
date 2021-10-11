@@ -16,7 +16,7 @@ Subhrendu K. Pattanayak_
 </details>
 
 <!-- FIX LINK TO PAPER -->
-We provide this repository to complement our [research article](https://www.tabarecapitan.com/assets/papers/CNFL_202103_compressed.pdf). We cannot include the raw data, but we include the code to run the analyses reported in the article.
+We provide this repository to complement our [research article](https://doi.org/10.1016/j.reseneeco.2021.101264). We cannot include the raw data, but we include the code to run the analyses reported in the article.
 
 
 ## Materials
@@ -72,7 +72,7 @@ CNFL (repository)
 
 ## Citation
 
-[To be updated once we publish the paper]
+Capitán, T., Alpízar, F., Madrigal-Ballestero, R., & Pattanayak, S. K. (2021). Time-Varying Pricing May Increase Total Electricity Consumption: Evidence from Costa Rica. _Resource and Energy Economics_
 
 ## Questions?
 
