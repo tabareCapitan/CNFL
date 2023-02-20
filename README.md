@@ -1,5 +1,6 @@
 # Time-Varying Pricing May Increase Total Electricity Consumption: Evidence from Costa Rica
 
+[![DOI](https://zenodo.org/badge/200291720.svg)](https://zenodo.org/badge/latestdoi/200291720)
 
 _[Tabaré Capitán](http://tabarecapitan.com/), Francisco Alpízar, Róger Madrigal-Ballestero,
 Subhrendu K. Pattanayak_
